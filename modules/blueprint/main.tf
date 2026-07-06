@@ -6,3 +6,10 @@ module "eks_cluster" {
 
   karpenter_enable = var.karpenter_enable
 }
+
+module "argo_core" {
+  count = var.argo_enable ? 1 : 0
+  source = "../argo"
+
+  depends_on = [ module.eks_cluster ]
+}

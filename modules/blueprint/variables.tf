@@ -11,3 +11,9 @@ variable "karpenter_enable" {
   type = bool
   default = false
 }
+
+variable "argo_enable" {
+  description = "Enable the ArgoCD Instalation"
+  type = bool
+  default = false
+}

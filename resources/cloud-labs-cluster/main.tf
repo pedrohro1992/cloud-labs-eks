@@ -5,4 +5,6 @@ module "cloud_labs" {
   kubernetes_version = "1.36"
 
   karpenter_enable = true
+
+  argo_enable = true
 }
