@@ -3,4 +3,6 @@ module "cloud_labs" {
 
   cluster_name = "cloud-labs"
   kubernetes_version = "1.36"
+
+  karpenter_enable = true
 }
