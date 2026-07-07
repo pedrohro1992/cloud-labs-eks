@@ -10,6 +10,10 @@ data "aws_security_group" "pivpn" {
   }
 }
 
+data "aws_ecrpublic_authorization_token" "token" {
+  region = "us-east-1"
+}
+
 
 data "aws_subnets" "private" {
   filter {
@@ -18,7 +22,7 @@ data "aws_subnets" "private" {
   }
 
   tags = {
-    Tier = "Private"  
+    Tier = "Private"
   }
 }
 

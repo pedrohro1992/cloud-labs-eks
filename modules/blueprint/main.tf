@@ -2,6 +2,7 @@ module "eks_cluster" {
   source = "../eks"
   
   cluster_name = var.cluster_name
+  cluster_endpoint = module.eks_cluster.cluster_endpoint
   kubernetes_version = var.kubernetes_version
 
   karpenter_enable = var.karpenter_enable

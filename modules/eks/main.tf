@@ -6,12 +6,12 @@ module "eks" {
   kubernetes_version = var.kubernetes_version
 
   addons = {
-    coredns                = {}
+    coredns = {}
     eks-pod-identity-agent = {
       before_compute = true
     }
-    kube-proxy             = {}
-    vpc-cni                = {
+    kube-proxy = {}
+    vpc-cni = {
       before_compute = true
     }
   }
@@ -20,17 +20,17 @@ module "eks" {
 
   enable_cluster_creator_admin_permissions = true
 
-  vpc_id                   = data.aws_vpc.this.id
-  subnet_ids               = data.aws_subnets.private.ids
+  vpc_id     = data.aws_vpc.this.id
+  subnet_ids = data.aws_subnets.private.ids
 
   security_group_additional_rules = {
     vpn_https = {
-      description                = "Access from VPN"
-      type                       = "ingress"
-      from_port                  = 443
-      to_port                    = 443
-      protocol                   = "tcp"
-      source_security_group_id   = data.aws_security_group.pivpn.id
+      description              = "Access from VPN"
+      type                     = "ingress"
+      from_port                = 443
+      to_port                  = 443
+      protocol                 = "tcp"
+      source_security_group_id = data.aws_security_group.pivpn.id
     }
   }
 
@@ -48,6 +48,10 @@ module "eks" {
       min_size     = 2
       max_size     = 10
       desired_size = 2
+
+      labels = {
+        "cloudlabs.infra-services" = "true"
+      }
 
       metadata_options = {
         http_endpoint               = "enabled"
