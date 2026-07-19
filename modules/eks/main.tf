@@ -14,6 +14,13 @@ module "eks" {
     vpc-cni = {
       before_compute = true
     }
+    aws-ebs-csi-driver = {
+      before_compute = true
+      pod_identity_association = [{
+        role_arn        = aws_iam_role.ebs_csi.arn
+        service_account = "ebs-csi-controller-sa"
+      }]
+    }
   }
 
   endpoint_public_access = false
@@ -31,6 +38,17 @@ module "eks" {
       to_port                  = 443
       protocol                 = "tcp"
       source_security_group_id = data.aws_security_group.pivpn.id
+    }
+  }
+
+  node_security_group_additional_rules = {
+    ingress_istio_webhook = {
+      description              = "Cluster control plane to istiod webhook"
+      type                     = "ingress"
+      from_port                = 15017
+      to_port                  = 15017
+      protocol                 = "tcp"
+      source_cluster_security_group = true
     }
   }
 
